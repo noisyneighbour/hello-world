@@ -1,0 +1,93 @@
+DATUM   CAS STEVILO UR  kaj si delal
+2.11.2018   8:00-16:00   8
+5.11.2018   8:00-16:00  8
+7.11.2018   10:00-15:00 5   Urejanje skripte v pythonu in slojev v QGISu za prikaz poplav po posameznih letih. Delanje na animaciji prikaza poplav 2006-2018 glede na leto.
+8.11.2018   14:00-17:30 3.5 Urejanje skripte v pythonu in slojev v QGISu za prikaz poplav po posameznih letih. Delanje na animaciji prikaza poplav 2006-2018 glede na leto.
+9.11.2018   10:15-17:20 7   Priprava skripte za delanje statistike za poplave. Prikaz s histogramom.
+12.11.2018  12:50-17:30 4   Dostop do podatkovne baze ARSO. Priprava skripte za črpanje podatkov o meritvah višine morja na mareografu Koper iz podatkovne baze ARSO
+13.11.2018  10:30-13:30 3   Pregled in izbira najbolj reprezentativnih podatkov o meritvah višine morja na mareografu Koper. Prikaz največjih plim in najnižjih osek za poljubno časovno obdobje.
+14.11.2018  7:30-15:30  8   Priprava skripte za delanje statistike za poplave. Prikaz s histogramom.
+15.11.2018  7:30-14:30  7   Dodelava skripte za črpanje podatkov o meritvah višine morja na mareografu Koper iz podatkovne baze ARSO. Skripta sedaj avtomatsko popravi luknje v podatkih in kombinira meritve treh senzorjev.
+16.11.2018  9:10-16:30  7.3  Dodelava skripte za črpanje podatkov o meritvah višine morja na mareografu Koper iz podatkovne baze ARSO. 
+19.11.2018  7:15-11:00  3.75    Dodelava skripte za črpanje podatkov o meritvah višine morja na mareografu Koper iz podatkovne baze ARSO. 
+20.11.2018  8:30-16:30  8   Dodelava skripte za črpanje podatkov o meritvah višine morja na mareografu Koper iz podatkovne baze ARSO. 
+22.11.2018  7:50-11:15  3.5 Primerjava preverjenih pododatkov vodostaja iz aplikacije hidrolog z neobdelanimi podatki iz mareografa Koper
+23.11.2018  7:30-12:15  4.75    
+23.11.2018  14:15-15:50  1.5    
+
+14.11.2018
+
+Za naslednji dan:
+Zrihtaj avtomatizacijo za pridobivanje uporabnih podatkov iz senzorja 360. Preveri če ima senzor luknje še kje drugje. 
+Alternativa: Po možnosti napiši skripto ki zanesljivo 'zaflika luknje' v podatkih senzorja in povpreči vse 3 senzorje za bolj zanesljivo meritev
+
+15.11.2018
+
+Izvedel alternativo. Zadeva deluje, treba je samo še skombinirati meritve v eno.
+---
+1. Za naslednji dan lahko prvo uredim združevanje meritev, potem pa lahko vzpostavim komunikacijo med skriptama VodostajKoper2017.py in PremikKoordinat.py. Ideja je da bi PremikKoordinat.py klical drugo skripto, in iz nje dobil podatke za maksimalen vodostaj za vsako leto 2006-2018. Tako bi primerjali podatke iz mareografa v Kopru s tabelo poplav 2006-2018.
+
+2. Druga stvar je, da bi lahko prešteli koliko dni v enem letu je bila gladina nad 300. Ta števec bo najbrž kazal več 'poplav' kot excel file ker bo poplave ki trajajo 2 dni štel kot 2 različni poplavi. Vprašanje je koliko je to uporabno.
+
+3. Lahko izračunamo povprečno gladino za vsako leto. Should be simple
+
+4. Uredi si account za ArcGIS in naredi vizualizacijo z različno velikimi pie charti za poplave 2006-2018. Story maps?
+
+16.11.2018 
+
+Uspel združiti meritve v eno povprečno, zadeva deluje. Optimiziral sem skripto za branje in indeksiranje podatkov iz mareografa Koper, zdaj je hitrejša. 
+
+19.11.2018
+
+Senzor 360 je najbolj zanesljiv. Za nadaljno uporabo je smiselno upoštevati samo senzor 360. Senzor 361 ima prepogoste offset anomalije, senzor 362 pa ima prepogoste 'špice'. Naslednja naloga je povezati skripti in napisati kodo za pridobivanje datumov poplav
+
+20.11.2018
+
+Nova prioriteta: 
+Povpraševanje po izvedbi storitev v okviru projekta "Študija obstoječih morskih tokov v koprskem pristanišču in koprskem zalivu"
+ 
+1. Statistika površinskih valov na oceanografskih bojah Zora, Zarja in Vida:
+-Rože valovanja za značilne in maksimalne višine valov
+-Osnovne statistične analize – določitev srednjih vrednosti in ekstremov za posamezne parametre, ki opisujejo valovanje (višina, smer in frekvenca valovanja)
+
+2. Statistika morskih tokov na oceanografskih bojah Zora, Zarja in Vida
+-Rože tokov za posamezno globino, kjer se izvajajo meritve
+-Osnovne statistične analize – določitev srednjih vrednosti in ekstremov za posamezne parametre, ki opisujejo morske tokove (smer in hitrost tokov)
+
+3. Podatki o tokovih in valovih za merilna mesta oceanografske boje Zora, Zarja in Vida, urne vrednosti za obdobje september 2014-september 2018, kontrolirane vrednosti
+
+4. Podatki o višini morja na mareografski postaji Koper Kapitanija, urne vrednosti za obdobje september 2014-september 2018, kontrolirane vrednosti
+
+5. Podatki o vetru na mareografski postaji Koper Kapitanija, urne vrednosti za obdobje september 2014-september 2018, kontrolirane vrednosti
+
+
+Že filtrirani urni podatki za hidrologe:
+
+http://borneo.arso.sigov.si:7007/hidrolog/om.do?idNode=85
+
+usnm: hidpro
+pass: 567hdp
+
+jeromel
+mjeromel/jeromelm
+ 
+Malo je treba počekirati te podatke, preverit zanesljivost itd, pol se lahko uporabijo za ene izmed točk 3-5
+ 
+ 
+ 
+Hint za iskanje maksimumov: narediš smoothing (nek low pass filter, ki ti filtrira žago okoli maksimuma), dobiš funkcijo, pri kateri izračunaš prvi in drugi odvod. Prvi odvod=0 ti da točko ekstrema, drugi odvod ti pove če je minimum ali maksimum. Ko dobiš točko pogledaš interval okoli te točke (T=3h ali T=2h), in vzameš največjo vrednost v tem intervalu.
+
+
+
+22.11.2018
+
+Napisal del skripte ki primerja preverjene podatke iz aplikacije hidrolog s podatki za vodostaj iz mareografske postaje v Kopru. Zaenkrat sem preverjal samo za september 2014, naslednjič lahko za obdobje sept2014-jun2015 (do koder imam zaenkrat preverjene podatke.
+
+Dokler ti Anja ne posreduje skript za vetrovne/tokovne rože, lahko poskusiš spisati skripto za določevanje max/min.
+
+
+23.11.2018  7:30-12:15  4.75    
+
+Preveril podatke iz hidrologa za obdobje sep2014-jun2015. Preselil sem se v novo pisarno, uredil delovno okolje, namestil pakete za python.
+
+Začel sem se ukvarjati z izdelavo low pass filtra za peakfinder v signalu vodostaja. Fino bi bilo če bi peakfinder lahko zapisal relativno splošno, tako da bi se ga dalo uporabljati tudi za kak drug set podatkov. Uporabil bi lahko funkcije z več parametri, naredil verzijo za datetime in brez, in podobne hece.
